@@ -1,5 +1,6 @@
 var currTrackedStocks = new Array();
 var rateOfReturn = 0;
+var cmdLines = new Array();
 
 function setRateOfReturn(ror) {
 	rateOfReturn = ror;
@@ -8,9 +9,10 @@ function setRateOfReturn(ror) {
 function createLink() {
 	$("#form").keydown(function (event) {
 		if(event.keyCode == 13) {
-			console.log(document.getElementById("form").value);
-			alert(document.getElementById("form").value);
-			return document.getElementById("form").value;
+			cmdLines = $('#form').val().split("\n");
+			console.log(cmdLines);
+			var link = cmdLines[cmdLines.length - 1];
+			return link;
 		}
 	})
 }
