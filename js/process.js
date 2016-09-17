@@ -10,8 +10,15 @@ function createLink() {
 	$("#form").keydown(function (event) {
 		if(event.keyCode == 13) {
 			cmdLines = $('#form').val().split("\n");
-			console.log(cmdLines);
 			var link = cmdLines[cmdLines.length - 1];
+
+			if (link === "clear"){
+				cmdLines =  new Array();
+				link = ""
+				$('#form').val("");
+			}
+			//console.log(cmdLines);
+			//alert(link);
 			return link;
 		}
 	})
