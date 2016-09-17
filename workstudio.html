@@ -15,10 +15,11 @@
     <link rel="stylesheet" href="lib/jquery-ui.min.css"/>
     <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="dist/css/lobipanel.min.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
   </head>
 
   <body>
-    <nav class="navbar navbar-static-top navbar-dark bg-inverse">
+    <nav class="navbar navbar-static-top navbar-dark bg-inverse"  style="margin-bottom: 0; background-color:white;">
       <a class="navbar-brand" href="#">Neo-Trader</a>
       <ul class="nav navbar-nav">
         <li class="nav-item active">
@@ -36,14 +37,32 @@
       </ul>
     </nav>
 
-    <div id="frame" style="margin:10px 10px;height=100%;">
-      <textarea id="terminal" style="min-height:100%;" name="cmd"></textarea>
-    </div>
-
     <!-- Bootstrap core JavaScript -->
     <script src="lib/jquery.1.11.min.js"></script>
     <script src="lib/jquery-ui.min.js"></script>
     <script src="bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="dist/js/lobipanel.min.js"></script>
+
+
+    <div>
+      <div class="panel panel-default" style="height:480px;">
+          <div class="panel-heading">
+              <div class="panel-title">
+                  <h4>Terminal</h4>
+              </div>
+          </div>
+          <textarea class="panel-body" type="text" style="width:100%;height:100%;-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */-moz-box-sizing: border-box;/* Firefox, other Gecko */
+     box-sizing: border-box;         /* Opera/IE 8+ */">
+          </textarea>
+      </div>
+      <script>
+         $(function(){
+              $('.panel').lobiPanel({
+                  //Options go here
+
+              });
+          });
+      </script>
+    </div>
   </body>
 </html>

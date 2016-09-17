@@ -1,0 +1,17 @@
+body {
+  background-color:#eee;
+}
+
+#frame {
+  margin:10px 10px;
+  padding: 10px;
+  height:100%;
+}
+
+.panel-body {
+  width:100%;
+  height:100%;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;/* Firefox, other Gecko */
+  box-sizing: border-box;         /* Opera/IE 8+ */"
+}
