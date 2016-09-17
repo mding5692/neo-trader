@@ -43,12 +43,20 @@ function recommendFromCurrTrackedStocks() {
 	console.log(recommendedStocks);
 }
 
+function createLink(command) {
+  var url = "https://api.projectoxford.ai/luis/v1/application/preview?id=526f6452-0231-4bef-afa5-a8c3c63d470e&subscription-key=baa34ae8054649a49229e587e3eff446&q=";
+  var commandArray = command.split(" ");
+  for each (word in commandArray) {
+    url.concat(word + "%20");
+  }
+  return url
+}
+
 $(document).ready(function() {
 	setRateOfReturn(30);
 	addStockToTrackedStocks("MSFT");
 	addStockToTrackedStocks("IBM");
 	addStockToTrackedStocks("YHOO");
 	addStockToTrackedStocks("FB");
-	recommendFromCurrTrackedStocks()	
+	recommendFromCurrTrackedStocks()
 });
-
