@@ -5,6 +5,16 @@ function setRateOfReturn(ror) {
 	rateOfReturn = ror;
 }
 
+function createLink() {
+	$("#form").keydown(function (event) {
+		if(event.keyCode == 13) {
+			console.log(document.getElementById("form").value);
+			alert(document.getElementById("form").value);
+			return document.getElementById("form").value;
+		}
+	})
+}
+
 function addStockToTrackedStocks(ticker) {
 	var stockInfo = {
 		"ticker": ticker
@@ -49,6 +59,6 @@ $(document).ready(function() {
 	addStockToTrackedStocks("IBM");
 	addStockToTrackedStocks("YHOO");
 	addStockToTrackedStocks("FB");
-	recommendFromCurrTrackedStocks()	
+	recommendFromCurrTrackedStocks()
+  createLink();
 });
-
