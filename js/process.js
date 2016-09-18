@@ -6,13 +6,13 @@ var log = new Array();
 
 /*****************Nanture Language Processing********************/
 function getInput() {
-    log = $('#form').val().split("\n");
+    log = $('#terminal').val().split("\n");
     var input = log[log.length - 1];
 
     if (input === "clear") {
         log = new Array();
         input = ""
-        $('#form').val("");
+        $('#terminal').val("");
     }
     return input;
 }
@@ -25,19 +25,20 @@ function createLink(input) {
         url = url + inputArray[i] + "%20";
     }
     inputArray = new Array();
-    return url
+    return url;
 }
 
 function NLPTracker(url) {
     $.getJSON(url, function(data) {
         var entities = data.entities;
+        var intent = data.topScoringIntent.intent;
+        var entityInfo = {intent};
         if (entities.length !== 0) {
-            var entityInfo = {};
             for (i = 0; i < entities.length; i++) {
                 switch (entities[i].type) {
                     case "stock_name":
                         entityInfo.stockName = entities[i].entity;
-                        console.log("entityInfo " + entityInfo.stockName);
+                        //console.log("entityInfo " + entityInfo.stockName);
                         break;
                     case "Date::start_date":
                         entityInfo.startDate = entities[i].entity;
@@ -58,17 +59,17 @@ function NLPTracker(url) {
             }
             NLPRecord.push(entityInfo);
             console.log(entityInfo);
-            //setTimeout(function() {
-                var ticker = entityInfo.stockName;
-                stockTracer(ticker);
-            //}, 1000);
+
+            var ticker = entityInfo.stockName;
+            console.log(ticker);
+            stockTracer(ticker, entityInfo);
         }
     });
 
 }
 
 /**********************Stock Info***********************/
-function stockTracer(ticker) {
+function stockTracer(ticker, entityInfo) {
     var stockInfo = {
         "ticker": ticker
     };
@@ -84,11 +85,25 @@ function stockTracer(ticker) {
             stockInfo.growthRate = Math.round(growthRate * 100);
             console.log(stockInfo);
             stocksRecord.push(stockInfo);
+            consoleRst(stockInfo, entityInfo);
         },
         error: function(err) {
             console.log(err);
         }
     });
+}
+
+function consoleRst(stockInfo, entityInfo) {
+  switch (entityInfo.intent){
+    case "get_stock":getStockConsole(stockInfo); break;
+    case "predict_trend":predictTrendConsole(stockInfo); break;
+  }
+}
+
+function getStockConsole(stockInfo) {
+  var info = "> " + stockInfo.ticker + "</br>Current Price: " + stockInfo.currPrice + ";</br>Two year growth rate: " + stockInfo.growthRate + ";</br>";
+console.log(info);
+  $("#console").append(info).show();
 }
 
 function setRateOfReturn(ror) {
@@ -112,11 +127,48 @@ function recommendFromCurrTrackedStocks() {
     console.log(recommendedStocks);
 }
 
+function plotStockPrice(url){
+  Plotly.d3.csv(url, function(rows){
+    var trace = {
+      type: 'scatter',                    // set the chart type
+      mode: 'lines',                      // connect points with lines
+      x: rows.map(function(row){          // set the x-data
+        return row['Time'];
+      }),
+      y: rows.map(function(row){          // set the x-data
+        return row['10 Min Sampled Avg'];
+      }),
+      line: {                             // set the width of the line.
+        width: 1
+      },
+      error_y: {
+        array: rows.map(function(row){    // set the height of the error bars
+          return row['10 Min Std Dev'];
+        }),
+        thickness: 0.5,                   // set the thickness of the error bars
+        width: 0
+      }
+    };
+
+    var layout = {
+      yaxis: {title: "Wind Speed"},       // set the y axis title
+      xaxis: {
+        showgrid: false,                  // remove the x-axis grid lines
+        tickformat: "%B, %Y"              // customize the date format to "month, day"
+      },
+      margin: {                           // update the left, bottom, right, top margin
+        l: 40, b: 10, r: 10, t: 20
+      }
+    };
+
+    Plotly.plot(document.getElementById('wind-speed'), [trace], layout, {showLink: false});
+});
+}
 
 /************************Main*****************************/
 $(document).ready(function() {
     setRateOfReturn(30);
-    $("#form").keydown(function(event) {
+    $("#terminal").keydown(function(event) {
         if (event.keyCode == 13) {
             NLPTracker(createLink(getInput()));
         }
