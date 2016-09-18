@@ -1,9 +1,11 @@
+
 html {
   height: 100%;
 }
 
 body {
-  background-color:#eee;
+  font-family: 'Lato', sans-serif;
+  background-color:#bdc3c7;
 }
 
 #frame {
@@ -12,6 +14,10 @@ body {
   height:100%;
   display: flex;
   flex-direction: column;
+} 
+
+.jumbotron  {
+  background-color: #8e44ad;
 }
 
 .panel-body {

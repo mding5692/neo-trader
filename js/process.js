@@ -1,10 +1,12 @@
 var NLPRecord = new Array();
 var stocksRecord = new Array();
+var normalChatArr = ["Hi, how can I help you?","Is there anything I can help with?","Sure thing"];
+var chatbotLoadingStr = "Neo is currently typing a response...";
 var rateOfReturn = 0;
 var JSONresponse = {};
 var log = new Array();
 
-/*****************Nanture Language Processing********************/
+/*****************Natural Language Processing********************/
 function getInput() {
     log = $('#terminal').val().split("\n");
     var input = log[log.length - 1];
@@ -13,7 +15,12 @@ function getInput() {
         log = new Array();
         input = ""
         $('#terminal').val("");
+        $("#console").val("");
+    } else if (input === "new") {
+    	var newDiv = '<div class="panel panel-default lobipanel" style="height:45vh;" data-sortable="true"><div class="panel-heading"><div class="panel-title"><h4>New Window</h4></div></div><textarea class="panel-body" type="text"></textarea>';
+    	$("#console").append(newDiv).show();
     }
+
     return input;
 }
 
@@ -104,13 +111,28 @@ function consoleRst(stockInfo, entityInfo) {
         case "predict_trend":
             predictTrendConsole(stockInfo);
             break;
+        case "None":
+        	startRandomChat();
+        	break;
     }
 }
 
 function getStockConsole(stockInfo) {
-    var info = "> " + stockInfo.ticker + "</br>Current Price: " + stockInfo.currPrice + ";</br>Two year growth rate: " + stockInfo.growthRate + ";</br>";
+    var info = "> " + stockInfo.ticker + "</br>Current Price: " + stockInfo.currPrice + "</br>5-year CAGR: " + stockInfo.growthRate + "%</br>";
     console.log(info);
     $("#console").append(info).show();
+}
+
+function predictTrendConsole(stockInfo) {
+
+	$("#console").append(info).show();
+}
+
+function startRandomChat() {
+	var numOfChatMsgs = normalChatArr.length;
+	var randNum = Math.floor((Math.random() * numOfChatMsgs) + 1);
+	var chatMsg = normalChatArr[randNum];
+	$("#console").append(chatMsg).show();
 }
 
 function setRateOfReturn(ror) {
@@ -135,7 +157,7 @@ function recommendFromCurrTrackedStocks() {
 }
 
 function plotStockPrice(sdata) {
-    var figDiv = $("<div></div>");
+    var figDiv = $("<div></div>")[0];
     figDiv.style = "width: 100%; height: 380px;"
 
     var stockdata = sdata.dataset.data;
