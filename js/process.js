@@ -36,7 +36,7 @@ function createLink(input) {
 }
 
 function getTicker(targetStock) {
-  $.getJSON("companylist.json", function(json) {
+  $.getJSON("https://github.com/mding5692/neo-trader/blob/historical/companylist.json", function(json) {
     var length = json.keys(obj).length;
     var targetStock = targetStock.toUpperCase();
     for(i=0; i<length; i++){
@@ -130,14 +130,11 @@ function consoleRst(stockInfo, entityInfo) {
         case "predict_trend":
             predictTrendConsole(stockInfo);
             break;
-<<<<<<< HEAD
         default:
-=======
         case "provide_recommendation":
             recommendFromCurrTrackedStocks();
             break;
         case "None":
->>>>>>> 22900b2cedd163daadd48e3a99629d26a8b03fac
         	startRandomChat();
     }
 }
