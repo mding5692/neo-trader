@@ -130,7 +130,14 @@ function consoleRst(stockInfo, entityInfo) {
         case "predict_trend":
             predictTrendConsole(stockInfo);
             break;
+<<<<<<< HEAD
         default:
+=======
+        case "provide_recommendation":
+            recommendFromCurrTrackedStocks();
+            break;
+        case "None":
+>>>>>>> 22900b2cedd163daadd48e3a99629d26a8b03fac
         	startRandomChat();
     }
 }
@@ -183,7 +190,7 @@ function recommendFromCurrTrackedStocks() {
 
 function plotStockPrice(sdata) {
     var figDiv = $("<div></div>")[0];
-    figDiv.style = "width: 100%; height: 380px;"
+    figDiv.style = "width: 100%; height: 380px; width: 862px;"
 
     var stockdata = sdata.dataset.data;
     google.charts.load('current', {
@@ -211,6 +218,7 @@ function plotStockPrice(sdata) {
       }
 
       $("#console").append(figDiv).show();
+      // $("#console").append("\n").show()
     }
 
     /************************Main*****************************/
