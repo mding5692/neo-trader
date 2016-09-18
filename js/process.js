@@ -124,16 +124,22 @@ function getStockConsole(stockInfo) {
 }
 
 function predictTrendConsole(stockInfo) {
-
+	var analystMsg = "";
+	if (stockInfo.growthRate > 0) {
+		analystMsg = "General analyst sentiment on this company is positive/bullish and there is a high probability of the stock price rising and being held or sold in the future.";
+	} else {
+		analystMsg = "General analyst sentiment on this company is negative/bearish and there is a high probability of the stock price falling or being shorted.";
+	}
+	var info = "> " + stockInfo.ticker + "<br>Historical Trends: The company has been moving at a " + stockInfo.growthRate + "% growth rate in past 5 years. <br> Analyst Rating: " + analystMsg;
 	$("#console").append(info).show();
 }
 
-function startRandomChat() {
+/*function startRandomChat() {
 	var numOfChatMsgs = normalChatArr.length;
 	var randNum = Math.floor((Math.random() * numOfChatMsgs) + 1);
 	var chatMsg = normalChatArr[randNum];
 	$("#console").append(chatMsg).show();
-}
+}*/
 
 function setRateOfReturn(ror) {
     rateOfReturn = ror;
@@ -153,12 +159,20 @@ function recommendFromCurrTrackedStocks() {
     setTimeout(10000);
     var recommendedStocks = currTrackedStocks;
     recommendedStocks.filter(removeStocksNotInAcceptableRange);
+    var info = "We recommend buying these stocks as they match your risk profile : " + recommendedStocks;
+    $("#console").append(info).show();
+}
+
+function recommendFromCurrTrackedStocks() {
+    setTimeout(10000);
+    var recommendedStocks = currTrackedStocks;
+    recommendedStocks.filter(removeStocksNotInAcceptableRange);
     console.log(recommendedStocks);
 }
 
 function plotStockPrice(sdata) {
     var figDiv = $("<div></div>")[0];
-    figDiv.style = "width: 100%; height: 380px;"
+    figDiv.style = "width: 100%; height: 380px; width: 862px;"
 
     var stockdata = sdata.dataset.data;
     google.charts.load('current', {
@@ -186,6 +200,7 @@ function plotStockPrice(sdata) {
       }
 
       $("#console").append(figDiv).show();
+      // $("#console").append("\n").show()
     }
 
     /************************Main*****************************/

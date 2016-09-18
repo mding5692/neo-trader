@@ -26,3 +26,12 @@ body {
   -moz-box-sizing: border-box;/* Firefox, other Gecko */
   box-sizing: border-box;         /* Opera/IE 8+ */"
 }
+
+div[dir="ltr"] {
+  width: 100% !important;
+}
+
+svg {
+  width: 862 !important;
+  preserveAspectRatio: "none" !important;
+}
