@@ -1,11 +1,17 @@
+html {
+  height: 100%;
+}
+
 body {
   background-color:#eee;
 }
 
 #frame {
-  margin:10px 10px;
+  margin:2px;
   padding: 10px;
   height:100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .panel-body {
