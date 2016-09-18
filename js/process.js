@@ -111,6 +111,9 @@ function consoleRst(stockInfo, entityInfo) {
         case "predict_trend":
             predictTrendConsole(stockInfo);
             break;
+        case "provide_recommendation":
+            recommendFromCurrTrackedStocks();
+            break;
         case "None":
         	startRandomChat();
         	break;
@@ -161,13 +164,6 @@ function recommendFromCurrTrackedStocks() {
     recommendedStocks.filter(removeStocksNotInAcceptableRange);
     var info = "We recommend buying these stocks as they match your risk profile : " + recommendedStocks;
     $("#console").append(info).show();
-}
-
-function recommendFromCurrTrackedStocks() {
-    setTimeout(10000);
-    var recommendedStocks = currTrackedStocks;
-    recommendedStocks.filter(removeStocksNotInAcceptableRange);
-    console.log(recommendedStocks);
 }
 
 function plotStockPrice(sdata) {
