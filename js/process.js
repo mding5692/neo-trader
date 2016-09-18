@@ -32,7 +32,9 @@ function NLPTracker(url) {
     $.getJSON(url, function(data) {
         var entities = data.entities;
         var intent = data.topScoringIntent.intent;
-        var entityInfo = {intent};
+        var entityInfo = {
+            intent
+        };
         if (entities.length !== 0) {
             for (i = 0; i < entities.length; i++) {
                 switch (entities[i].type) {
@@ -77,15 +79,16 @@ function stockTracer(ticker, entityInfo) {
     console.log("the url: " + url);
     $.ajax({
         url: url,
-        success: function(data) {
-            var currStockPrice = data.dataset.data[0][1];
+        success: function(sdata) {
+            var currStockPrice = sdata.dataset.data[0][1];
             stockInfo.currPrice = currStockPrice;
-            var stockPrice2YearsAgo = data.dataset.data[600][1];
+            var stockPrice2YearsAgo = sdata.dataset.data[600][1];
             var growthRate = (currStockPrice - stockPrice2YearsAgo) / stockPrice2YearsAgo;
             stockInfo.growthRate = Math.round(growthRate * 100);
             console.log(stockInfo);
             stocksRecord.push(stockInfo);
             consoleRst(stockInfo, entityInfo);
+            plotStockPrice(sdata);
         },
         error: function(err) {
             console.log(err);
@@ -94,16 +97,20 @@ function stockTracer(ticker, entityInfo) {
 }
 
 function consoleRst(stockInfo, entityInfo) {
-  switch (entityInfo.intent){
-    case "get_stock":getStockConsole(stockInfo); break;
-    case "predict_trend":predictTrendConsole(stockInfo); break;
-  }
+    switch (entityInfo.intent) {
+        case "get_stock":
+            getStockConsole(stockInfo);
+            break;
+        case "predict_trend":
+            predictTrendConsole(stockInfo);
+            break;
+    }
 }
 
 function getStockConsole(stockInfo) {
-  var info = "> " + stockInfo.ticker + "</br>Current Price: " + stockInfo.currPrice + ";</br>Two year growth rate: " + stockInfo.growthRate + ";</br>";
-console.log(info);
-  $("#console").append(info).show();
+    var info = "> " + stockInfo.ticker + "</br>Current Price: " + stockInfo.currPrice + ";</br>Two year growth rate: " + stockInfo.growthRate + ";</br>";
+    console.log(info);
+    $("#console").append(info).show();
 }
 
 function setRateOfReturn(ror) {
@@ -127,50 +134,44 @@ function recommendFromCurrTrackedStocks() {
     console.log(recommendedStocks);
 }
 
-function plotStockPrice(url){
-  Plotly.d3.csv(url, function(rows){
-    var trace = {
-      type: 'scatter',                    // set the chart type
-      mode: 'lines',                      // connect points with lines
-      x: rows.map(function(row){          // set the x-data
-        return row['Time'];
-      }),
-      y: rows.map(function(row){          // set the x-data
-        return row['10 Min Sampled Avg'];
-      }),
-      line: {                             // set the width of the line.
-        width: 1
-      },
-      error_y: {
-        array: rows.map(function(row){    // set the height of the error bars
-          return row['10 Min Std Dev'];
-        }),
-        thickness: 0.5,                   // set the thickness of the error bars
-        width: 0
-      }
-    };
+function plotStockPrice(sdata) {
+    var figDiv = $("<div></div>");
+    figDiv.style = "width: 100%; height: 380px;"
 
-    var layout = {
-      yaxis: {title: "Wind Speed"},       // set the y axis title
-      xaxis: {
-        showgrid: false,                  // remove the x-axis grid lines
-        tickformat: "%B, %Y"              // customize the date format to "month, day"
-      },
-      margin: {                           // update the left, bottom, right, top margin
-        l: 40, b: 10, r: 10, t: 20
-      }
-    };
-
-    Plotly.plot(document.getElementById('wind-speed'), [trace], layout, {showLink: false});
-});
-}
-
-/************************Main*****************************/
-$(document).ready(function() {
-    setRateOfReturn(30);
-    $("#terminal").keydown(function(event) {
-        if (event.keyCode == 13) {
-            NLPTracker(createLink(getInput()));
-        }
+    var stockdata = sdata.dataset.data;
+    google.charts.load('current', {
+        'packages': ['corechart']
     });
-});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function getData() {
+        var newData = new Array();
+        for (i = 0; i < 10; i++){
+            var dataSlice = stockdata[i].slice(0, 5);
+            newData.push(dataSlice);
+        }
+        return newData;
+    }
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable(getData(), true);
+        var options = {
+            legend: 'none'
+        };
+        console.log(figDiv);
+        var chart = new google.visualization.CandlestickChart(figDiv);
+        chart.draw(data, options);
+      }
+
+      $("#console").append(figDiv).show();
+    }
+
+    /************************Main*****************************/
+    $(document).ready(function() {
+        setRateOfReturn(30);
+        $("#terminal").keydown(function(event) {
+            if (event.keyCode == 13) {
+                NLPTracker(createLink(getInput()));
+            }
+        });
+    });
