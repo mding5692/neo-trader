@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Neo-Trader</title>
+
+    <!--Include this css file in the <head> tag -->
+    <link rel="stylesheet" href="lib/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="dist/css/lobipanel.min.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+  </head>
+
+  <body style="height:100%;">
+    <nav class="navbar navbar-static-top navbar-dark bg-inverse"  style="margin-bottom: 0; background-color:white;">
+      <a class="navbar-brand" href="#">Neo-Trader</a>
+      <ul class="nav navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="intro.html">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="workstudio.html">Work Studio</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div id="frame">
+      <div class="panel panel-default lobipanel" style="height:240px;" id="terminal" data-sortable="true">
+          <div class="panel-heading">
+              <div class="panel-title">
+                  <h4>Terminal</h4>
+              </div>
+          </div>
+          <textarea class="panel-body" type="text" id="form"></textarea>
+      </div>
+      <div class="panel panel-default lobipanel" style="height:240px;" id="console" data-sortable="true">
+          <div class="panel-heading">
+              <div class="panel-title">
+                  <h4>Console</h4>
+              </div>
+          </div>
+          <div class="panel-body" type="text" id="form"></div>
+      </div>
+      <!-- Bootstrap core JavaScript -->
+      <script src="lib/jquery.1.11.min.js"></script>
+      <script src="lib/jquery-ui.min.js"></script>
+      <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+      <script src="dist/js/lobipanel.min.js"></script>
+      <script src="js/process.js"></script>
+      <script src="js/ui.js"></script>
+    </div>
+  </body>
+</html>
