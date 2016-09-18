@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,12 +13,12 @@
     <title>Neo-Trader</title>
 
     <!--Include this css file in the <head> tag -->
-    <link rel="stylesheet" href="lib/jquery-ui.min.css"/>
-    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="dist/css/lobipanel.min.css"/>
-    <link rel="stylesheet" href="css/style.css"/>
-  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-  </head>
+    <link rel="stylesheet" href="lib/jquery-ui.min.css" />
+    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="dist/css/lobipanel.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+</head>
 
   <body style="height:100%;">
     <nav class="navbar navbar-static-top navbar-dark bg-inverse"  style="margin-bottom: 0; background-color:rgba(69, 82, 67, 0.63);">
@@ -33,30 +34,32 @@
     </nav>
 
     <div id="frame">
-      <div class="panel panel-default lobipanel" style="height:42vh;" data-sortable="true">
-          <div class="panel-heading">
-              <div class="panel-title">
-                  <h4>Terminal</h4>
-              </div>
-          </div>
-          <textarea class="panel-body" placeholder="Chat here, please provide the stock as a ticker if possible..." type="text" id="terminal"></textarea>
-      </div>
-      <div class="panel panel-default lobipanel" style="height:45vh;" data-sortable="true">
-          <div class="panel-heading">
-              <div class="panel-title">
-                  <h4>Console</h4>
-              </div>
-          </div>
-          <div class="panel-body" type="text" id="console"></div>
-      </div>
-      <!-- Bootstrap core JavaScript -->
-      <script src="lib/jquery.1.11.min.js"></script>
-      <script src="lib/jquery-ui.min.js"></script>
-      <script src="bootstrap/dist/js/bootstrap.min.js"></script>
-      <script src="dist/js/lobipanel.min.js"></script>
-      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-      <script src="js/ui.js"></script>
-      <script src="js/process.js"></script>
+        <div class="panel panel-default lobipanel" style="height:45vh;" data-sortable="true">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4>Console</h4>
+                </div>
+            </div>
+            <div class="panel-body" type="text" id="console"></div>
+        </div>
+
+        <div class="panel panel-default lobipanel" style="height:42vh;" data-sortable="true">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4>Terminal</h4>
+                </div>
+            </div>
+            <textarea class="panel-body" placeholder="Chat here, please provide the stock as a ticker if possible..." type="text" id="terminal"></textarea>
+        </div>
     </div>
-  </body>
+    <!-- Bootstrap core JavaScript -->
+    <script src="lib/jquery.1.11.min.js"></script>
+    <script src="lib/jquery-ui.min.js"></script>
+    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="dist/js/lobipanel.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/process.js"></script>
+</body>
+
 </html>
