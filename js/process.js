@@ -87,8 +87,8 @@ function NLPTracker(url) {
             console.log(entityInfo);
 
             //var ticker = entityInfo.stockName;
-            var targetStock = entityInfo.stockName;
-            var ticker = getTicker(targetStock);
+            //var targetStock = entityInfo.stockName;
+            var ticker = entityInfo.stockName;/*getTicker(targetStock);*/
             console.log(ticker);
             stockTracer(ticker, entityInfo);
         }
@@ -207,7 +207,9 @@ function plotStockPrice(sdata) {
     function drawChart() {
         var data = google.visualization.arrayToDataTable(getData(), true);
         var options = {
-            legend: 'none'
+            legend: 'none',
+            width: 720,
+            height: 320
         };
         console.log(figDiv);
         var chart = new google.visualization.CandlestickChart(figDiv);
@@ -215,7 +217,6 @@ function plotStockPrice(sdata) {
       }
 
       $("#console").append(figDiv).show();
-      // $("#console").append("\n").show()
     }
 
     /************************Main*****************************/
