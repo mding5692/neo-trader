@@ -35,6 +35,23 @@ function createLink(input) {
     return url;
 }
 
+function getTicker(targetStock) {
+  $.getJSON("companylist.json", function(json) {
+    var length = json.keys(obj).length;
+    var targetStock = targetStock.toUpperCase();
+    for(i=0; i<length; i++){
+      var company = json[i];
+      var ticker = company.Symbol;
+      var companyName = company.Name.toUpperCase();
+      console.log(ticker);
+      console.log(companyName);
+      if (companyName.indexOf(targetStock) !== -1){
+        return ticker;
+      }
+    }
+  });
+}
+
 function NLPTracker(url) {
     $.getJSON(url, function(data) {
         var entities = data.entities;
@@ -69,7 +86,9 @@ function NLPTracker(url) {
             NLPRecord.push(entityInfo);
             console.log(entityInfo);
 
-            var ticker = entityInfo.stockName;
+            //var ticker = entityInfo.stockName;
+            var targetStock = entityInfo.stockName;
+            var ticker = getTicker(targetStock);
             console.log(ticker);
             stockTracer(ticker, entityInfo);
         }
@@ -111,9 +130,8 @@ function consoleRst(stockInfo, entityInfo) {
         case "predict_trend":
             predictTrendConsole(stockInfo);
             break;
-        case "None":
+        default:
         	startRandomChat();
-        	break;
     }
 }
 
@@ -124,16 +142,22 @@ function getStockConsole(stockInfo) {
 }
 
 function predictTrendConsole(stockInfo) {
-
+	var analystMsg = "";
+	if (stockInfo.growthRate > 0) {
+		analystMsg = "General analyst sentiment on this company is positive/bullish and there is a high probability of the stock price rising and being held or sold in the future.";
+	} else {
+		analystMsg = "General analyst sentiment on this company is negative/bearish and there is a high probability of the stock price falling or being shorted.";
+	}
+	var info = "> " + stockInfo.ticker + "<br>Historical Trends: The company has been moving at a " + stockInfo.growthRate + "% growth rate in past 5 years. <br> Analyst Rating: " + analystMsg;
 	$("#console").append(info).show();
 }
 
-function startRandomChat() {
+/*function startRandomChat() {
 	var numOfChatMsgs = normalChatArr.length;
 	var randNum = Math.floor((Math.random() * numOfChatMsgs) + 1);
 	var chatMsg = normalChatArr[randNum];
 	$("#console").append(chatMsg).show();
-}
+}*/
 
 function setRateOfReturn(ror) {
     rateOfReturn = ror;
@@ -153,7 +177,8 @@ function recommendFromCurrTrackedStocks() {
     setTimeout(10000);
     var recommendedStocks = currTrackedStocks;
     recommendedStocks.filter(removeStocksNotInAcceptableRange);
-    console.log(recommendedStocks);
+    var info = "We recommend buying these stocks as they match your risk profile : " + recommendedStocks;
+    $("#console").append(info).show();
 }
 
 function plotStockPrice(sdata) {
