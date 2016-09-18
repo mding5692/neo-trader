@@ -126,7 +126,7 @@ function recommendFromCurrTrackedStocks() {
     setTimeout(10000);
     var recommendedStocks = currTrackedStocks;
     recommendedStocks.filter(removeStocksNotInAcceptableRange);
-    console.log(recommendedStocks);
+    //console.log(recommendedStocks);
 }
 
 function predict(name) {
